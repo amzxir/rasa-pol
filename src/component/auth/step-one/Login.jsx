@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
+import { FadeTransform } from "react-animation-components";
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import * as yup from "yup";
 import axios from "axios";
@@ -50,30 +51,32 @@ export default function Login(props) {
     };
     // end function send mobile
     return (
-        <Box>
-            <div className="content-form-login">
-                <img className="img-fluid" src="/image/identification.svg" alt="" />
-                <h1 className="h1-login">{fa["Login and Register"]}</h1>
-                <p className="title-login-form">
-                    {fa["Enter your mobile"]}
-                </p>
-                <p className="title-login-form">
-                    {fa["The activation code will be sent to this number"]}
-                </p>
-            </div>
-            <div className="form-auth">
-                <form onSubmit={handleSubmit(handleSubmits)}>
-                    <div className="mb-3">
-                        <div className="form-group">
-                            <input className="input-login" type="number" inputMode="numeric" placeholder="+98" {...register("mobile")} />
-                            <FingerprintIcon className="svg-login"/>
+        <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
+            <Box>
+                <div className="content-form-login">
+                    <img className="img-fluid" src="/image/identification.svg" alt="" />
+                    <h1 className="h1-login">{fa["Login and Register"]}</h1>
+                    <p className="title-login-form">
+                        {fa["Enter your mobile"]}
+                    </p>
+                    <p className="title-login-form">
+                        {fa["The activation code will be sent to this number"]}
+                    </p>
+                </div>
+                <div className="form-auth">
+                    <form onSubmit={handleSubmit(handleSubmits)}>
+                        <div className="mb-3">
+                            <div className="form-group">
+                                <input className="input-login" type="number" inputMode="numeric" placeholder="+98" {...register("mobile")} />
+                                <FingerprintIcon className="svg-login" />
+                            </div>
+                            <span className="error">{errors.mobile?.message}</span>
                         </div>
-                        <span className="error">{errors.mobile?.message}</span>
-                    </div>
-                    <button className="btn-login" disabled={spinner}>{fa["Get code"]}{spinner ? <div class="lds-dual-ring"></div> : ''}</button>
-                </form>
-            </div>
-        </Box>
+                        <button className="btn-login" disabled={spinner}>{fa["Get code"]}{spinner ? <div class="lds-dual-ring"></div> : ''}</button>
+                    </form>
+                </div>
+            </Box>
+        </FadeTransform>
     )
 }
 

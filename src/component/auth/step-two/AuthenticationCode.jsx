@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify'
+import { FadeTransform } from "react-animation-components";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from "axios";
 import Context from "../../../context/context";
@@ -75,7 +76,7 @@ export default function AuthenticationCode(props) {
                 setSpinner(false)
                 const getToken = response.data.token;
                 localStorage.setItem("token", getToken);
-                toast.success("به رسادنت خوش آمدید");
+                toast.success("به پل خوش آمدید");
                 navigate("/");
 
             }
@@ -111,50 +112,52 @@ export default function AuthenticationCode(props) {
     }
     // end handel send agian code 
     return (
-        <Box className="form_code">
-            <h1 className="h1-code">{fa["Verification of identity code"]}</h1>
-            <div className="timer">
-                <span className="span-code-1">{timer}</span>
-            </div>
-
-            <p className="text-mobile">
-                {fa["Code for the number"]} <span className="span-code-2">{mobile}</span> {fa["has been sent"]}
-            </p>
-            <form onSubmit={handleSubmit(handelFinalSubmit)} className="send_code">
-                <div className="form-flex">
-                    {otp.map((data, index) => {
-                        return (
-                            <input
-                                key={index}
-                                value={data}
-                                onFocus={(e) => e.target.select()}
-                                onChange={(e) => handelChnage(e.target, index)}
-                                className="form-controll"
-                                name="otp"
-                                maxLength="1"
-                                type="number"
-                                inputMode="numeric"
-                            />
-                        );
-                    })}
+        <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
+            <Box className="form_code">
+                <h1 className="h1-code">{fa["Verification of identity code"]}</h1>
+                <div className="timer">
+                    <span className="span-code-1">{timer}</span>
                 </div>
-                <button className="btn-code"><span className="btn-span-code">{fa["login"]}</span><ChevronLeftIcon className="btn-span-code" /></button>
-            </form>
 
-            <div className="re-send">
-                <p className="text-two">
-                    {fa["I did not receive the code"]}
-                    <span onClick={limit === true ? handelSendAgain : null} className="text-one">
-                        {fa["Send agian"]}
-                    </span>
+                <p className="text-mobile">
+                    {fa["Code for the number"]} <span className="span-code-2">{mobile}</span> {fa["has been sent"]}
                 </p>
-                <p
-                    onClick={chnageMobile}
-                    className="text-there">
-                    {fa["Change number"]}
-                </p>
-            </div>
-        </Box>
+                <form onSubmit={handleSubmit(handelFinalSubmit)} className="send_code">
+                    <div className="form-flex">
+                        {otp.map((data, index) => {
+                            return (
+                                <input
+                                    key={index}
+                                    value={data}
+                                    onFocus={(e) => e.target.select()}
+                                    onChange={(e) => handelChnage(e.target, index)}
+                                    className="form-controll"
+                                    name="otp"
+                                    maxLength="1"
+                                    type="number"
+                                    inputMode="numeric"
+                                />
+                            );
+                        })}
+                    </div>
+                    <button className="btn-code"><span className="btn-span-code">{fa["login"]}</span><ChevronLeftIcon className="btn-span-code" /></button>
+                </form>
+
+                <div className="re-send">
+                    <p className="text-two">
+                        {fa["I did not receive the code"]}
+                        <span onClick={limit === true ? handelSendAgain : null} className="text-one">
+                            {fa["Send agian"]}
+                        </span>
+                    </p>
+                    <p
+                        onClick={chnageMobile}
+                        className="text-there">
+                        {fa["Change number"]}
+                    </p>
+                </div>
+            </Box>
+        </FadeTransform>
     )
 }
 

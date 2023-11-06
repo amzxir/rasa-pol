@@ -129,14 +129,16 @@ body {
     top: 0;
     padding: 1rem 0rem;
     background-color: #f9f9f9;
+    z-index: 100000 !important;
   }
 }
 
 .navbar-fixed {
   background-color: #f9f9f9;
   z-index: 100;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  z-index: 100000 !important;
 }
 
 .header-back {
@@ -301,7 +303,7 @@ body {
   font-family: "font-light" !important;
 }
 
-.select-form{
+.select-form {
   border: 1px solid #eaeaea !important;
   background: #ffffff;
   width: 100%;
@@ -347,13 +349,13 @@ body {
   outline: 0;
 }
 
-.select-font{
+.select-font {
   font-family: "font-light" !important;
   font-size: 13px;
 }
 
 
-.rmsc .dropdown-container{
+.rmsc .dropdown-container {
   border: 1px solid #eaeaea !important;
   padding: 1px 0px 1px 0px !important;
   border-radius: 15px !important;
@@ -602,6 +604,6 @@ input[type=number] {
   font-family: "font-light" !important;
 }
 
-.mb-1{
+.mb-1 {
   margin-bottom: 1rem;
 }

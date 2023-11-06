@@ -12,6 +12,10 @@ export default function Header() {
     let navigate = useNavigate();
     // end variable react router dom
 
+    // start get mobile 
+    const mobile = localStorage.getItem("mobile");
+    // end get mobile 
+
     return (
         <Container maxWidth="sm" className="navbar-fixed">
             {path !== "/" ?
@@ -35,7 +39,7 @@ export default function Header() {
                                     👋 خوش آمدید
                                 </p>
                                 <p className="text_name">
-                                    09199954356
+                                    {mobile}
                                 </p>
                             </div>
                         </Stack>
