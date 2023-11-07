@@ -46,7 +46,7 @@ export default function Home() {
         <Grid sx={{ mb:2 }} container spacing={2}>
           {dataService.map((i, index) => {
             return (
-              <Grid sx={{ pl: "10px !important", width: "100%" }} item xs={6}>
+              <Grid key={i.id} sx={{ pl: "10px !important", width: "100%" }} item xs={6}>
                 <NavLink to={i.path} className="card-platform" state={i.name} >
                   <Avatar alt="Remy Sharp" src={i.path_img} />
                   <p className="name-platform">

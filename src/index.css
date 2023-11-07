@@ -32,7 +32,7 @@ button,
   font-family: "font-primary" !important;
 }
 
-.font-light {
+.font-light , li {
   font-family: "font-light" !important;
 }
 

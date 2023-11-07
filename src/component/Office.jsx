@@ -47,11 +47,22 @@ const schema = yup.object().shape({
     system_number: yup.string().required('فیلد شماره نظام پزشکی اجباری است'),
     phone: yup.string().required('فیلد شماره ثابت اجباری است'),
     office_worker: yup.string().required('فیلد عمرفعال مطب اجباری است'),
-    // common_treatment_center: yup.string().required('فیلد درمان شایع مرکز اجباری است'),
-    // brand: yup.string().required('فیلد برند اجباری است'),
+    common_treatment_center: yup.mixed().test("file", "فیلد درمان شایع مرکز اجباری است", (value) => {
+        if (value.length > 0) {  
+          return true;
+        }
+        return false;
+    }),
+    brand: yup.mixed().test("file", "فیلد برند اجباری است", (value) => {
+        if (value.length > 0) {  
+          return true;
+        }
+        return false;
+    }),
     details: yup.string().required('فیلد سوال اجباری است'),
     matrial: yup.string().required('فیلد روش تهیه مواد مصرفی اجباری است'),
-    // buy: yup.string().required('فیلد شرایط خرید اجباری است'),
+    buy: yup.string().required('فیلد شرایط خرید اجباری است'),
+    buy_detals: yup.string().required('فیلد جزیات خرید اجباری است'),
 
 });
 
@@ -60,13 +71,6 @@ const schema = yup.object().shape({
 export default function Office() {
 
     // start multip select 
-
-    const [buy, setBuy] = useState();
-
-    const handelBuy = (e) => {
-        setBuy(e.target.value)
-    }
-
     const [personName, setPersonName] = React.useState([]);
     const handleChange = (event) => {
         const {
@@ -92,7 +96,7 @@ export default function Office() {
     // end multip select 
 
     // start react hook form
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset , watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
     // end react hook form
@@ -144,52 +148,49 @@ export default function Office() {
                     <div className="form-groups">
                         <select className="select-form" {...register("matrial")}>
                             <option value=''>روش تهیه مواد مصرفی را انتخاب کنید</option>
-                            <option value="1">سفارش اینترنتی از شرکت های وار کننده یا تولید کننده</option>
-                            <option value="1">سفارش اینترنتی از شرکت های توزیع کننده</option>
-                            <option value="1">شفارش از یک فروشنده</option>
-                            <option value="1">مراجعه حصوری به بازار</option>
-                            <option value="1">خرید از نمایشگاه</option>
+                            <option value="سفارش اینترنتی از شرکت های وار کننده یا تولید کننده">سفارش اینترنتی از شرکت های وار کننده یا تولید کننده</option>
+                            <option value="سفارش اینترنتی از شرکت های توزیع کننده">سفارش اینترنتی از شرکت های توزیع کننده</option>
+                            <option value="شفارش از یک فروشنده">شفارش از یک فروشنده</option>
+                            <option value="مراجعه حصوری به بازار">مراجعه حصوری به بازار</option>
+                            <option value="خرید از نمایشگاه">خرید از نمایشگاه</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
-                    {/* <span className="error">{errors.buy?.message}</span> */}
+                    <span className="error">{errors.buy?.message}</span>
                     <div className="form-groups">
-                        <select className="select-form" onChange={handelBuy}>
+                        <select className="select-form" {...register("buy")}>
                             <option value=''>شرایط خرید را انتخاب کنید</option>
                             <option value="نقدی">نقدی</option>
                             <option value="شرایط">شرایط</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
-                    {buy === "نقدی" ?
-                        <div className="form-groups">
-                            <select className="select-form">
-                                <option value=''>جزیات خرید را انتخاب کنید</option>
-                                <option value="پرداخت - ارسال">پرداخت - ارسال</option>
-                                <option value="ارسال - پرداخت">ارسال - پرداخت</option>
-                            </select>
-                            <ArrowDropDownIcon className="svg-form" fontSize='small' />
-                        </div>
+                    {watch("buy") === "نقدی" ?
+                        <>
+                            <span className="error">{errors.buy_detals?.message}</span>
+                            <div className="form-groups">
+                                <select className="select-form" {...register("buy_detals")}>
+                                    <option value=''>جزیات خرید را انتخاب کنید</option>
+                                    <option value="پرداخت - ارسال">پرداخت - ارسال</option>
+                                    <option value="ارسال - پرداخت">ارسال - پرداخت</option>
+                                </select>
+                                <ArrowDropDownIcon className="svg-form" fontSize='small' />
+                            </div>
+                        </>
                     : null}
-                    {buy === "شرایط" ?
-                        <div className="form-groups">
-                            <input className="input-form" type="text" placeholder="شرایط را خلاصه وارد کنید" />
-                            <CreateIcon className="svg-form" fontSize='small' />
-                        </div>
+                    {watch("buy") === "شرایط" ?
+                        <>
+                            <span className="error">{errors.buy_detals?.message}</span>
+                            <div className="form-groups">
+                                <input className="input-form" type="text" placeholder="شرایط را خلاصه وارد کنید" {...register("buy_detals")} />
+                                <CreateIcon className="svg-form" fontSize='small' />
+                            </div>
+                        </>
                     : null}
-                    <div className="form-groups">
-                        <select className="select-form" {...register("satisfaction")}>
-                            <option value=''>میزان رضایت از تامین کننده را انتخاب کنید</option>
-                            <option value="1">خیلی راضی</option>
-                            <option value="1">راضی</option>
-                            <option value="1">ناراضی</option>
-                            <option value="1">شاکی</option>
-                        </select>
-                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
-                    </div>
+                    <span className="error">{errors.common_treatment_center?.message}</span>
                     <div className="form-groups">
                         <Select
-                            // {...register("common_treatment_center")}
+                            {...register("common_treatment_center")}
                             sx={{ pr: 0 }}
                             className="input-form"
                             multiple
@@ -221,10 +222,10 @@ export default function Office() {
                             ))}
                         </Select>
                     </div>
-                    {/* <span className="error">{errors.common_treatment_center?.message}</span> */}
+                    <span className="error">{errors.brand?.message}</span>
                     <div className="form-groups">
                         <Select
-                            // {...register("brand")}
+                            {...register("brand")}
                             sx={{ pr: 0 }}
                             className="input-form"
                             multiple
@@ -251,10 +252,20 @@ export default function Office() {
                                     key={name}
                                     value={name}
                                 >
-                                    {/* {name} */}
+                                    {name}
                                 </MenuItem>
                             ))}
                         </Select>
+                    </div>
+                    <div className="form-groups">
+                        <select className="select-form" {...register("satisfaction")}>
+                            <option value=''>میزان رضایت از تامین کننده را انتخاب کنید</option>
+                            <option value="1">خیلی راضی</option>
+                            <option value="1">راضی</option>
+                            <option value="1">ناراضی</option>
+                            <option value="1">شاکی</option>
+                        </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.details?.message}</span>
                     <div className="form-groups">

@@ -54,11 +54,23 @@ const schema = yup.object().shape({
     operation_license: yup.string().required('فیلد شماره پروانه بهره برداری اجباری است'),
     phone: yup.string().required('فیلد شماره ثابت اجباری است'),
     office_worker: yup.string().required('فیلد عمرفعال مطب اجباری است'),
-    // common_treatment_center: yup.string().required('فیلد درمان شایع مرکز اجباری است'),
-    // brand: yup.string().required('فیلد برند اجباری است'),
-    details: yup.string().required('فیلد سوال اجباری است'),
+    common_treatment_center: yup.mixed().test("file", "فیلد درمان شایع مرکز اجباری است", (value) => {
+        if (value.length > 0) {  
+          return true;
+        }
+        return false;
+    }),
+    brand: yup.mixed().test("file", "فیلد برند اجباری است", (value) => {
+        if (value.length > 0) {  
+          return true;
+        }
+        return false;
+    }),
+    details: yup.string().required('فیلد سوال اجباری است').nullable(),
     date: yup.string().required('فیلد ساعت فعالیت اجباری است'),
     expertise: yup.string().required('فیلد تخصص اجباری است'),
+    buy: yup.string().required('فیلد شرایط خرید اجباری است'),
+    buy_detals: yup.string().required('فیلد جزیات خرید اجباری است'),
     matrial: yup.string().required('فیلد روش تهیه مواد مصرفی اجباری است'),
 });
 
@@ -97,7 +109,7 @@ export default function Clinic() {
     // end multip select 
 
     // start react hook form
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset , watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
     // end react hook form
@@ -109,6 +121,7 @@ export default function Clinic() {
         toast.success('با موفقیت ثبت شد')
     }
     // end function submit form
+
 
     return (
         <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
@@ -123,11 +136,11 @@ export default function Clinic() {
                     <div className="form-groups">
                         <select className="select-form" {...register("type_center")}>
                             <option value=''>نوع مرکز را انتخاب کنید</option>
-                            <option value="1">کلینیک عمومی دندانپزشکی</option>
-                            <option value="1">کلینیک تخصصی دندانپزشکی</option>
-                            <option value="1">بیمارستان دندانپزشکی</option>
-                            <option value="1">بخش دندانپزشکی درمانگاه</option>
-                            <option value="1">بخش بیمارستان دندانپزشکی</option>
+                            <option value="کلینیک عمومی دندانپزشکی">کلینیک عمومی دندانپزشکی</option>
+                            <option value="کلینیک تخصصی دندانپزشکی">کلینیک تخصصی دندانپزشکی</option>
+                            <option value="بیمارستان دندانپزشکی">بیمارستان دندانپزشکی</option>
+                            <option value="بخش دندانپزشکی درمانگاه">بخش دندانپزشکی درمانگاه</option>
+                            <option value="بخش بیمارستان دندانپزشکی">بخش بیمارستان دندانپزشکی</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -135,10 +148,10 @@ export default function Clinic() {
                     <div className="form-groups">
                         <select className="select-form" {...register("nature_center")}>
                             <option value=''>ماهیت مرکز را انتخاب کنید</option>
-                            <option value="1">دولتی</option>
-                            <option value="1">خصوصی</option>
-                            <option value="1">عمومی غیر دولتی</option>
-                            <option value="1">خیریه</option>
+                            <option value="دولتی">دولتی</option>
+                            <option value="خصوصی">خصوصی</option>
+                            <option value="عمومی غیر دولتی">عمومی غیر دولتی</option>
+                            <option value="خیریه">خیریه</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -166,10 +179,10 @@ export default function Clinic() {
                     <div className="form-groups">
                         <select className="select-form" {...register("date")}>
                             <option value=''>ساعت فعالیت را انتخاب کنید</option>
-                            <option value="1">صبح</option>
-                            <option value="1">عصر</option>
-                            <option value="1">شبانه روزی</option>
-                            <option value="1">صبح و عصر</option>
+                            <option value="صبح">صبح</option>
+                            <option value="عصر">عصر</option>
+                            <option value="شبانه روزی">شبانه روزی</option>
+                            <option value="صبح و عصر">صبح و عصر</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -192,16 +205,16 @@ export default function Clinic() {
                     <div className="form-groups">
                         <select className="select-form" {...register("expertise")}>
                             <option value=''>تخصص را انتخاب کنید</option>
-                            <option value="1">دندانپزشک عمومی</option>
-                            <option value="1">متخصص ترمیمی</option>
-                            <option value="1">متخصص درمان ریشه</option>
-                            <option value="1">جراح فک و صورت</option>
-                            <option value="1">جراح لثه</option>
-                            <option value="1">جراح لثه</option>
-                            <option value="1">متخصص کودک</option>
-                            <option value="1">متخصص ارتودنسی</option>
-                            <option value="1">متخصص بیماری های دهان</option>
-                            <option value="1">متخصص رادیولوژی</option>
+                            <option value="دندانپزشک عمومی">دندانپزشک عمومی</option>
+                            <option value="متخصص ترمیمی">متخصص ترمیمی</option>
+                            <option value="متخصص درمان ریشه">متخصص درمان ریشه</option>
+                            <option value="جراح فک و صورت">جراح فک و صورت</option>
+                            <option value="جراح لثه">جراح لثه</option>
+                            <option value="جراح لثه">جراح لثه</option>
+                            <option value="متخصص کودک">متخصص کودک</option>
+                            <option value="متخصص ارتودنسی">متخصص ارتودنسی</option>
+                            <option value="متخصص بیماری های دهان">متخصص بیماری های دهان</option>
+                            <option value="متخصص رادیولوژی">متخصص رادیولوژی</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -209,49 +222,45 @@ export default function Clinic() {
                     <div className="form-groups">
                         <select className="select-form" {...register("matrial")}>
                             <option value=''>روش تهیه مواد مصرفی را انتخاب کنید</option>
-                            <option value="1">سفارش اینترنتی از شرکت های وار کننده یا تولید کننده</option>
-                            <option value="1">سفارش اینترنتی از شرکت های توزیع کننده</option>
-                            <option value="1">شفارش از یک فروشنده</option>
-                            <option value="1">مراجعه حصوری به بازار</option>
-                            <option value="1">خرید از نمایشگاه</option>
+                            <option value="سفارش اینترنتی از شرکت های وار کننده یا تولید کننده">سفارش اینترنتی از شرکت های وار کننده یا تولید کننده</option>
+                            <option value="سفارش اینترنتی از شرکت های توزیع کننده">سفارش اینترنتی از شرکت های توزیع کننده</option>
+                            <option value="شفارش از یک فروشنده">شفارش از یک فروشنده</option>
+                            <option value="مراجعه حصوری به بازار">مراجعه حصوری به بازار</option>
+                            <option value="خرید از نمایشگاه">خرید از نمایشگاه</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
-                    {/* <span className="error">{errors.buy?.message}</span> */}
+                    <span className="error">{errors.buy?.message}</span>
                     <div className="form-groups">
-                        <select className="select-form" onChange={handelBuy}>
+                        <select className="select-form" {...register("buy")}>
                             <option value=''>شرایط خرید را انتخاب کنید</option>
                             <option value="نقدی">نقدی</option>
                             <option value="شرایط">شرایط</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
-                    {buy === "نقدی" ?
-                        <div className="form-groups">
-                            <select className="select-form">
-                                <option value=''>جزیات خرید را انتخاب کنید</option>
-                                <option value="پرداخت - ارسال">پرداخت - ارسال</option>
-                                <option value="ارسال - پرداخت">ارسال - پرداخت</option>
-                            </select>
-                            <ArrowDropDownIcon className="svg-form" fontSize='small' />
-                        </div>
+                    {watch("buy") === "نقدی" ?
+                        <>
+                            <span className="error">{errors.buy_detals?.message}</span>
+                            <div className="form-groups">
+                                <select className="select-form" {...register("buy_detals")}>
+                                    <option value=''>جزیات خرید را انتخاب کنید</option>
+                                    <option value="پرداخت - ارسال">پرداخت - ارسال</option>
+                                    <option value="ارسال - پرداخت">ارسال - پرداخت</option>
+                                </select>
+                                <ArrowDropDownIcon className="svg-form" fontSize='small' />
+                            </div>
+                        </>
                     : null}
-                    {buy === "شرایط" ?
-                        <div className="form-groups">
-                            <input className="input-form" type="text" placeholder="شرایط را خلاصه وارد کنید" />
-                            <CreateIcon className="svg-form" fontSize='small' />
-                        </div>
+                    {watch("buy") === "شرایط" ?
+                        <>
+                            <span className="error">{errors.buy_detals?.message}</span>
+                            <div className="form-groups">
+                                <input className="input-form" type="text" placeholder="شرایط را خلاصه وارد کنید" {...register("buy_detals")} />
+                                <CreateIcon className="svg-form" fontSize='small' />
+                            </div>
+                        </>
                     : null}
-                    <div className="form-groups">
-                        <select className="select-form" {...register("satisfaction")}>
-                            <option value=''>میزان رضایت از تامین کننده را انتخاب کنید</option>
-                            <option value="1">خیلی راضی</option>
-                            <option value="1">راضی</option>
-                            <option value="1">ناراضی</option>
-                            <option value="1">شاکی</option>
-                        </select>
-                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
-                    </div>
                     <span className="error">{errors.mobile?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="number" inputMode="numeric" placeholder="شماره همراه" {...register("mobile")} />
@@ -267,9 +276,10 @@ export default function Clinic() {
                         <input className="input-form" type="number" inputMode="numeric" placeholder="عمرفعال مطب" {...register("office_worker")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
+                    <span className="error">{errors.common_treatment_center?.message}</span>
                     <div className="form-groups">
                         <Select
-                            // {...register("common_treatment_center")}
+                            {...register("common_treatment_center")}
                             sx={{ pr: 0 }}
                             className="input-form"
                             multiple
@@ -301,10 +311,10 @@ export default function Clinic() {
                             ))}
                         </Select>
                     </div>
-                    {/* <span className="error">{errors.common_treatment_center?.message}</span> */}
+                    <span className="error">{errors.brand?.message}</span>
                     <div className="form-groups">
                         <Select
-                            // {...register("brand")}
+                            {...register("brand")}
                             sx={{ pr: 0 }}
                             className="input-form"
                             multiple
@@ -332,12 +342,21 @@ export default function Clinic() {
                                     value={name}
                                     className="select-font"
                                 >
-                                    {/* {name} */}
+                                    {name}
                                 </MenuItem>
                             ))}
                         </Select>
                     </div>
-                    {/* <span className="error">{errors.brand?.message}</span> */}
+                    <div className="form-groups">
+                        <select className="select-form" {...register("satisfaction")}>
+                            <option value=''>میزان رضایت از تامین کننده را انتخاب کنید</option>
+                            <option value="خیلی راضی">خیلی راضی</option>
+                            <option value="راضی">راضی</option>
+                            <option value="ناراضی">ناراضی</option>
+                            <option value="شاکی">شاکی</option>
+                        </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
+                    </div>
                     <span className="error">{errors.details?.message}</span>
                     <div className="form-groups">
                         <textarea className="textarea-form" type="text" style={{ height: '200px' }} placeholder="مواد رو از چه کسی میگیری و چجوری تهیه میکنی ؟" {...register("details")}></textarea>
