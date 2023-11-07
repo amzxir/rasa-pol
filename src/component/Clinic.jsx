@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
 import { FadeTransform } from "react-animation-components";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import * as yup from "yup";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
@@ -128,6 +129,7 @@ export default function Clinic() {
                             <option value="1">بخش دندانپزشکی درمانگاه</option>
                             <option value="1">بخش بیمارستان دندانپزشکی</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.nature_center?.message}</span>
                     <div className="form-groups">
@@ -138,6 +140,7 @@ export default function Clinic() {
                             <option value="1">عمومی غیر دولتی</option>
                             <option value="1">خیریه</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.name_founder?.message}</span>
                     <div className="form-groups">
@@ -168,6 +171,7 @@ export default function Clinic() {
                             <option value="1">شبانه روزی</option>
                             <option value="1">صبح و عصر</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     {/* <div className="form-groups">
                         <input className="input-form" type="number" inputMode="numeric" placeholder="تعداد یونیت فعال" {...register("Number_active_units")} />
@@ -199,6 +203,7 @@ export default function Clinic() {
                             <option value="1">متخصص بیماری های دهان</option>
                             <option value="1">متخصص رادیولوژی</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.matrial?.message}</span>
                     <div className="form-groups">
@@ -210,6 +215,7 @@ export default function Clinic() {
                             <option value="1">مراجعه حصوری به بازار</option>
                             <option value="1">خرید از نمایشگاه</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     {/* <span className="error">{errors.buy?.message}</span> */}
                     <div className="form-groups">
@@ -218,6 +224,7 @@ export default function Clinic() {
                             <option value="نقدی">نقدی</option>
                             <option value="شرایط">شرایط</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     {buy === "نقدی" ?
                         <div className="form-groups">
@@ -226,14 +233,15 @@ export default function Clinic() {
                                 <option value="پرداخت - ارسال">پرداخت - ارسال</option>
                                 <option value="ارسال - پرداخت">ارسال - پرداخت</option>
                             </select>
+                            <ArrowDropDownIcon className="svg-form" fontSize='small' />
                         </div>
-                        : null}
+                    : null}
                     {buy === "شرایط" ?
                         <div className="form-groups">
                             <input className="input-form" type="text" placeholder="شرایط را خلاصه وارد کنید" />
                             <CreateIcon className="svg-form" fontSize='small' />
                         </div>
-                        : null}
+                    : null}
                     <div className="form-groups">
                         <select className="select-form" {...register("satisfaction")}>
                             <option value=''>میزان رضایت از تامین کننده را انتخاب کنید</option>
@@ -242,6 +250,7 @@ export default function Clinic() {
                             <option value="1">ناراضی</option>
                             <option value="1">شاکی</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.mobile?.message}</span>
                     <div className="form-groups">

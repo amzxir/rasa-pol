@@ -5,32 +5,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
 import { FadeTransform } from "react-animation-components";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import * as yup from "yup";
 
-// start data input select multip
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-];
-// end data input select multip
 
 // regex error validation
 const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{11}$/;
@@ -44,8 +21,6 @@ const schema = yup.object().shape({
     study: yup.string().required('فیلد شهر محل تحصیل اجباری است'),
     city: yup.string().required('فیلد شهر محل اقامت اجباری است'),
     date: yup.string().required('فیلد سال ورودی اجباری است'),
-
-
 });
 
 
@@ -115,6 +90,7 @@ export default function introduction() {
                             <option value=''>شهر محل تحصیل را انتخاب کنید</option>
                             <option value="1">تهران</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.city?.message}</span>
                     <div className="form-groups">
@@ -122,6 +98,7 @@ export default function introduction() {
                             <option value=''>شهر محل اقامت را انتخاب کنید</option>
                             <option value="1">تهران</option>
                         </select>
+                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.date?.message}</span>
                     <div className="form-groups">
