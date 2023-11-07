@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Clinic from "./component/Clinic";
 import Office from "./component/Office";
 import Introduction from "./component/Introduction";
+import ApplicationAuth from "./component/auth/App";
+import Register from "./component/auth/register";
 
 
 
@@ -28,7 +30,9 @@ export default function App() {
     <Context.Provider value={{ token, spinner, setSpinner, mobile }}>
       <Layouts>
         <Routes key={location.key} location={location}>
+          <Route path="/app" element={<ApplicationAuth />}></Route>
           <Route path="/login" element={<Auth />}></Route>
+          <Route path="/register" element={<Register />}></Route>
           <Route element={<Protected />}>
             <Route exact path="/" element={<Home />}></Route>
             <Route path="/clinic" element={<Clinic />}></Route>

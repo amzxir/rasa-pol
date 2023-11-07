@@ -55,7 +55,7 @@ export default function Login(props) {
             <Box>
                 <div className="content-form-login">
                     <img className="img-fluid" src="/image/identification.svg" alt="" />
-                    <h1 className="h1-login">{fa["Login and Register"]}</h1>
+                    <h1 className="h1-login">{fa["login"]}</h1>
                     <p className="title-login-form">
                         {fa["Enter your mobile"]}
                     </p>

@@ -8,7 +8,7 @@ export default function Protected() {
     const { token } = useContext(Context)
     // end fetch context
     if (!token) {
-        return <Navigate to='/login' replace />
+        return <Navigate to='/app' replace />
     }
     return <Outlet />
 }

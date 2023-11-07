@@ -17,7 +17,7 @@ export default function Layouts(props) {
 
     return (
         <Box className="super-app-container-light">
-            {path !== "/login" ? <Header /> : null}
+            {path !== "/app" ? <Header /> : null}
             <Container maxWidth="sm">
                 <div ref={ref} className="scroll-auto-light">
                     {props.children}
