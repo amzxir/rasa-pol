@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
       <Box sx={{ mt: 5, mb: 5 }}>
-        <Grid container spacing={2}>
+        <Grid sx={{ mb:2 }} container spacing={2}>
           {dataService.map((i, index) => {
             return (
               <Grid sx={{ pl: "10px !important", width: "100%" }} item xs={6}>
@@ -62,12 +62,12 @@ export default function Home() {
           })}
         </Grid>
 
-        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+        <NavLink to={"https://rasadent.com/rasajet-panel"} target="_black" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
           <img className="img-fluid" style={{ borderRadius: '15px' }} src="/image/1.jpg" alt="" />
-        </div>
-        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+        </NavLink>
+        <NavLink to={"https://rasadent.com"} target="_black" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
           <img className="img-fluid" style={{ borderRadius: '15px' }} src="/image/2.jpg" alt="" />
-        </div>
+        </NavLink>
       </Box>
     </FadeTransform>
   )

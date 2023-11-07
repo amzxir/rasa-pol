@@ -66,8 +66,8 @@ export default function Login(props) {
                 <div className="form-auth">
                     <form onSubmit={handleSubmit(handleSubmits)}>
                         <div className="mb-3">
-                            <div className="form-group">
-                                <input className="input-login" type="number" inputMode="numeric" placeholder="+98" {...register("mobile")} />
+                            <div className="form-group" style={{ direction:'rtl' }}>
+                                <input className="input-login" type="number" inputMode="numeric" placeholder="شماره همراه خود را وارد کنید" {...register("mobile")} />
                                 <FingerprintIcon className="svg-login" />
                             </div>
                             <span className="error">{errors.mobile?.message}</span>

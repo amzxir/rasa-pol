@@ -240,7 +240,7 @@ body {
   width: 100%;
   box-sizing: border-box;
   height: 48px;
-  padding: 1px 11px 1px 40px;
+  padding: 1px 40px 1px 11px;
   border-radius: 7px;
   gap: 9px;
   font-family: "font-number" !important;
@@ -263,7 +263,7 @@ body {
 .svg-login {
   position: absolute;
   z-index: 10000;
-  left: 10px;
+  right: 10px;
   top: 30%;
 }
 
@@ -351,7 +351,7 @@ body {
 
 .select-font {
   font-family: "font-light" !important;
-  font-size: 13px;
+  font-size: 13px !important;
 }
 
 
