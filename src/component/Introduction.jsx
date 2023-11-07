@@ -24,7 +24,6 @@ const schema = yup.object().shape({
 });
 
 
-
 export default function introduction() {
 
     // start multip select 
