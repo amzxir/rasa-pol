@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Grid } from '@mui/material'
 import { FadeTransform } from "react-animation-components";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import CreateIcon from '@mui/icons-material/Create';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import * as yup from "yup";
@@ -14,9 +16,15 @@ const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{11}$/;
 
 // validate form hook
 const schema = yup.object().shape({
+    card_melli: yup.mixed().test("file", "فیلد کارت ملی اجباری است", (value) => {
+        return value && value.length
+    }),
+    card_un: yup.mixed().test("file", "فیلد کارت دانشجویی اجباری است", (value) => {
+        return value && value.length
+    }),
     mobile: yup.string().required('فیلد شماره موبایل اجباری است').matches(phoneRegExp, 'شماره موبایل را به درستی وارد کنید'),
     name: yup.string().required('فیلد نام اجباری است'),
-    email: yup.string().required('فیلد ایمیل اجباری است'),
+    // email: yup.string().required('فیلد ایمیل اجباری است'),
     code_melli: yup.string().required('فیلد کدملی اجباری است'),
     name_un: yup.string().required('فیلد نام دانشگاه اجباری است'),
     details: yup.string().required('فیلد سوال اجباری است'),
@@ -24,36 +32,66 @@ const schema = yup.object().shape({
     city: yup.string().required('فیلد شهر محل اقامت اجباری است'),
     date: yup.string().required('فیلد سال ورودی اجباری است'),
     target: yup.string().required('فیلد هدف اصلی اجباری است'),
-    card_melli: yup.mixed().test("file", "فیلد کارت ملی اجباری است", (value) => {
-        if (value.length > 0) {  
-          return true;
-        }
-        return false;
-    }),
-    card_un: yup.mixed().test("file", "فیلد کارت دانشجویی اجباری است", (value) => {
-        if (value.length > 0) {  
-          return true;
-        }
-        return false;
-    }),
 });
 
 
 export default function Register() {
 
     // start react hook form
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
     // end react hook form
 
+    // start use navigate 
+    const navigate = useNavigate();
+    // end use navigate 
+
     // start function submit form
-    const handleSubmits = (data) => {
-        console.log(data)
-        reset();
-        toast.success('تبریک با موفقیت ثبت نام شدید')
+    const handleSubmits = async (data) => {
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+
+        const bodyParameters = {
+            key: "value",
+            mobile: data.mobile,
+            national_code: data.code_melli,
+            univ_name: data.name_un,
+            edu_city: data.study,
+            location: data.city,
+            description: data.details,
+            name: data.name,
+            year_income: data.date,
+            national_cart: data.card_melli[0],
+            student_cart: data.card_un[0],
+            porpose: data.target
+        }
+
+        try {
+            const response = await axios.post("https://rasapol.reshe.ir/api/Sign-up", bodyParameters, config);
+            console.log(response);
+            if (response.data.status_code === 500) {
+                toast.error('خطا در سرور مجدد تلاش کنید')
+            } else if (response.data.status_code === 422) {
+                toast.error(response.data.msg)
+            } else if (response.data.status_code === 200) {
+                toast.success("تبریک با موفقیت ثبت نام شدید منتظر تایید حساب خود باشید");
+                reset();
+                navigate("/app")
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
     }
+
     // end function submit form
+
+
 
     return (
         <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
@@ -74,11 +112,11 @@ export default function Register() {
                         <input className="input-form" type="number" inputMode="numeric" placeholder="شماره همراه" {...register("mobile")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
-                    <span className="error">{errors.email?.message}</span>
+                    {/* <span className="error">{errors.email?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="text" placeholder="ایمیل" {...register("email")} />
                         <CreateIcon className="svg-form" fontSize='small' />
-                    </div>
+                    </div> */}
                     <span className="error">{errors.name_un?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="text" placeholder="نام دانشگاه" {...register("name_un")} />
@@ -88,7 +126,7 @@ export default function Register() {
                     <div className="form-groups">
                         <select className="select-form" {...register("study")}>
                             <option value=''>شهر محل تحصیل را انتخاب کنید</option>
-                            <option value="1">تهران</option>
+                            <option value='تهران'>تهران</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -96,7 +134,7 @@ export default function Register() {
                     <div className="form-groups">
                         <select className="select-form" {...register("city")}>
                             <option value=''>شهر محل اقامت را انتخاب کنید</option>
-                            <option value="1">تهران</option>
+                            <option value='تهران'>تهران</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -109,14 +147,14 @@ export default function Register() {
                         <Grid xs={6} item>
                             <span className="error">{errors.card_melli?.message}</span>
                             <div className="form-groups">
-                                <label className='card-melli' htmlFor="card_melli"><span className='span-card-melli'>بارگذاری کارت ملی</span></label>
-                                <input className='d-none' type="file" id='card_melli' {...register("card_melli")} />
+                                <label className='card-melli' htmlFor="card_melli"><span className='span-card-melli'>{watch("card_melli")?.length !== 0 ? 'کارت ملی آپلود شد' : 'بارگذاری کارت ملی'}</span></label>
+                                <input type="file" className='d-none' id='card_melli' {...register("card_melli")} />
                             </div>
                         </Grid>
                         <Grid xs={6} item>
                             <span className="error">{errors.card_un?.message}</span>
                             <div className="form-groups">
-                                <label className='card-melli' htmlFor="card_un"><span className='span-card-melli'>بارگذاری کارت دانشجویی</span></label>
+                                <label className='card-melli' htmlFor="card_un"><span className='span-card-melli'>{watch("card_un")?.length !== 0 ? 'کارت دانشجویی آپلود شد' : 'بارگذاری کارت دانشجویی'}</span></label>
                                 <input className='d-none' type="file" id='card_un' {...register("card_un")} />
                             </div>
                         </Grid>

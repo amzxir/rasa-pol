@@ -257,7 +257,7 @@ export default function Office() {
                             ))}
                         </Select>
                     </div>
-                    <div className="form-groups">
+                    {/* <div className="form-groups">
                         <select className="select-form" {...register("satisfaction")}>
                             <option value=''>میزان رضایت از تامین کننده را انتخاب کنید</option>
                             <option value="1">خیلی راضی</option>
@@ -266,7 +266,7 @@ export default function Office() {
                             <option value="1">شاکی</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
-                    </div>
+                    </div> */}
                     <span className="error">{errors.details?.message}</span>
                     <div className="form-groups">
                         <textarea className="textarea-form" type="text" style={{ height: '200px' }} placeholder="مواد رو از چه کسی میگیری و چجوری تهیه میکنی ؟" {...register("details")}></textarea>

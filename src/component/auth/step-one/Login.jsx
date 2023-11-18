@@ -34,7 +34,7 @@ export default function Login(props) {
         setSpinner(true)
         const mobile = data;
         try {
-            const response = await axios.post("https://rasadent.reshe.ir/api/SendOtp", mobile);
+            const response = await axios.post("https://rasapol.reshe.ir/api/SendOtp", mobile);
             if (response.data.status_code === 422) {
                 toast.error(response.data.msg)
             } else if (response.data.status_code === 200) {

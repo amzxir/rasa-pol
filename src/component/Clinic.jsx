@@ -49,7 +49,7 @@ const schema = yup.object().shape({
     number_units: yup.string().required('فیلد تعداد یونیت اجباری است'),
     // Number_active_units: yup.string().required('فیلد تعداد یونیت فعال اجباری است'),
     active_shift: yup.string().required('فیلد شیفت فعال اجباری است'),
-    Collaborator_name: yup.string().required('فیلد نام همکار پزشک اجباری است'),
+    // Collaborator_name: yup.string().required('فیلد نام همکار پزشک اجباری است'),
     system_number: yup.string().required('فیلد شماره نظام پزشکی موسس اجباری است'),
     operation_license: yup.string().required('فیلد شماره پروانه بهره برداری اجباری است'),
     phone: yup.string().required('فیلد شماره ثابت اجباری است'),
@@ -196,11 +196,11 @@ export default function Clinic() {
                         <input className="input-form" type="number" inputMode="numeric" placeholder="شیفت فعال" {...register("active_shift")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
-                    <span className="error">{errors.Collaborator_name?.message}</span>
+                    {/* <span className="error">{errors.Collaborator_name?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="text" placeholder="نام همکار پزشک" {...register("Collaborator_name")} />
                         <CreateIcon className="svg-form" fontSize='small' />
-                    </div>
+                    </div> */}
                     <span className="error">{errors.expertise?.message}</span>
                     <div className="form-groups">
                         <select className="select-form" {...register("expertise")}>
@@ -347,7 +347,7 @@ export default function Clinic() {
                             ))}
                         </Select>
                     </div>
-                    <div className="form-groups">
+                    {/* <div className="form-groups">
                         <select className="select-form" {...register("satisfaction")}>
                             <option value=''>میزان رضایت از تامین کننده را انتخاب کنید</option>
                             <option value="خیلی راضی">خیلی راضی</option>
@@ -356,7 +356,7 @@ export default function Clinic() {
                             <option value="شاکی">شاکی</option>
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
-                    </div>
+                    </div> */}
                     <span className="error">{errors.details?.message}</span>
                     <div className="form-groups">
                         <textarea className="textarea-form" type="text" style={{ height: '200px' }} placeholder="مواد رو از چه کسی میگیری و چجوری تهیه میکنی ؟" {...register("details")}></textarea>

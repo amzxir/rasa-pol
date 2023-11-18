@@ -58,38 +58,34 @@ export default function AuthenticationCode(props) {
 
     // start handel submit login
     const handelFinalSubmit = async () => {
-        // setSpinner(true)
-        // const verOtp = otp.join("");
-        // const verify = {
-        //     mobile: props.data.mobile,
-        //     code: verOtp,
-        // }
-        // // console.log(verOtp)
-        // try {
-        //     const response = await axios.post("https://rasadent.reshe.ir/api/VerifyOtp", verify);
-        //     // console.log(response);
+        setSpinner(true)
+        const verOtp = otp.join("");
+        const verify = {
+            mobile: props.data.mobile,
+            code: verOtp,
+        }
+        // console.log(verOtp)
+        try {
+            const response = await axios.post("https://rasapol.reshe.ir/api/VerifyOtp", verify);
+            console.log(response);
 
-        //     if (response.data.msg === "data invalid") {
-        //         setSpinner(false)
-        //         toast.success(response.data.msg)
-        //     } else if (response.data.token) {
-        //         setSpinner(false)
-        //         const getToken = response.data.token;
-        //         localStorage.setItem("token", getToken);
-        //         toast.success("به پل خوش آمدید");
-        //         navigate("/");
+            if (response.data.msg === "data invalid") {
+                setSpinner(false)
+                toast.success(response.data.msg)
+            } else if (response.data.token) {
+                setSpinner(false)
+                const getToken = response.data.token;
+                localStorage.setItem("token", getToken);
+                toast.success("به پل خوش آمدید");
+                navigate("/");
 
-        //     }
-        //     // console.log(response);
+            }
+            // console.log(response);
 
-        // } catch (error) {
-        //     // console.error(error);
-        //     setSpinner(false)
-        // }
-        const getToken = 'sjakdhjksakdh5233446235adshg';
-        localStorage.setItem("token", getToken);
-        toast.success("به پل خوش آمدید");
-        navigate("/");
+        } catch (error) {
+            // console.error(error);
+            setSpinner(false)
+        }
     };
     // end handel submit login
 
