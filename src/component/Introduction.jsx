@@ -5,45 +5,50 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
 import { FadeTransform } from "react-animation-components";
+import { QRCodeSVG } from 'qrcode.react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import * as yup from "yup";
 
 
-// regex error validation
-const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{11}$/;
+// // regex error validation
+// const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{11}$/;
 
-// validate form hook
-const schema = yup.object().shape({
-    mobile: yup.string().required('فیلد شماره موبایل اجباری است').matches(phoneRegExp, 'شماره موبایل را به درستی وارد کنید'),
-    name: yup.string().required('فیلد نام اجباری است'),
-    name_un: yup.string().required('فیلد نام دانشگاه اجباری است'),
-    details: yup.string().required('فیلد سوال اجباری است'),
-    study: yup.string().required('فیلد شهر محل تحصیل اجباری است'),
-    city: yup.string().required('فیلد شهر محل اقامت اجباری است'),
-    date: yup.string().required('فیلد سال ورودی اجباری است'),
-});
+// // validate form hook
+// const schema = yup.object().shape({
+//     mobile: yup.string().required('فیلد شماره موبایل اجباری است').matches(phoneRegExp, 'شماره موبایل را به درستی وارد کنید'),
+//     name: yup.string().required('فیلد نام اجباری است'),
+//     name_un: yup.string().required('فیلد نام دانشگاه اجباری است'),
+//     details: yup.string().required('فیلد سوال اجباری است'),
+//     study: yup.string().required('فیلد شهر محل تحصیل اجباری است'),
+//     city: yup.string().required('فیلد شهر محل اقامت اجباری است'),
+//     date: yup.string().required('فیلد سال ورودی اجباری است'),
+// });
 
 
 export default function introduction() {
 
-    // start react hook form
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
-        resolver: yupResolver(schema),
-    });
-    // end react hook form
+    // // start react hook form
+    // const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    //     resolver: yupResolver(schema),
+    // });
+    // // end react hook form
 
-    // start function submit form
-    const handleSubmits = (data) => {
-        console.log(data)
-        reset();
-        toast.success('با موفقیت ثبت شد')
-    }
-    // end function submit form
+    // // start function submit form
+    // const handleSubmits = (data) => {
+    //     console.log(data)
+    //     reset();
+    //     toast.success('با موفقیت ثبت شد')
+    // }
+    // // end function submit form
 
     return (
         <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
             <Box sx={{ mt: 5, mb: 5 }}>
-                <form onSubmit={handleSubmit(handleSubmits)}>
+                <div className='img-center'>
+                    <QRCodeSVG className='img-fluid' value="https://rasapol.reshe.ir/" />
+                </div>
+                <p className='title-login-form' style={{ fontSize:'16px' }}>برای ثبت همکار لطفا بارکد را اسکن کنید</p>
+                {/* <form onSubmit={handleSubmit(handleSubmits)}>
                     <span className="error">{errors.name?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="text" placeholder="نام و نام خانوادگی" {...register("name")} />
@@ -87,7 +92,7 @@ export default function introduction() {
                     <div>
                         <button className="btn-form"><span className="btn-span-code">ثبت</span></button>
                     </div>
-                </form>
+                </form> */}
             </Box>
         </FadeTransform>
     )

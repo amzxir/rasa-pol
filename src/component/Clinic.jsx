@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { Box } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create';
 import { useForm } from "react-hook-form";
@@ -10,6 +10,8 @@ import * as yup from "yup";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Context from "../context/Context";
+import axios from 'axios';
 
 // start data input select multip
 const ITEM_HEIGHT = 48;
@@ -55,14 +57,14 @@ const schema = yup.object().shape({
     phone: yup.string().required('فیلد شماره ثابت اجباری است'),
     office_worker: yup.string().required('فیلد عمرفعال مطب اجباری است'),
     common_treatment_center: yup.mixed().test("file", "فیلد درمان شایع مرکز اجباری است", (value) => {
-        if (value.length > 0) {  
-          return true;
+        if (value.length > 0) {
+            return true;
         }
         return false;
     }),
     brand: yup.mixed().test("file", "فیلد برند اجباری است", (value) => {
-        if (value.length > 0) {  
-          return true;
+        if (value.length > 0) {
+            return true;
         }
         return false;
     }),
@@ -78,13 +80,11 @@ const schema = yup.object().shape({
 
 export default function Clinic() {
 
+    // start use context
+    const { token } = useContext(Context)
+    // end use context
+
     // start multip select 
-
-    const [buy, setBuy] = useState();
-    const handelBuy = (e) => {
-        setBuy(e.target.value)
-    }
-
     const [personName, setPersonName] = React.useState([]);
     const handleChange = (event) => {
         const {
@@ -109,16 +109,70 @@ export default function Clinic() {
     // end multip select 
 
     // start react hook form
-    const { register, handleSubmit, reset , watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
     // end react hook form
 
+
+
     // start function submit form
-    const handleSubmits = (data) => {
-        console.log(data)
-        reset();
-        toast.success('با موفقیت ثبت شد')
+    const handleSubmits = async (data) => {
+
+        const id = localStorage.getItem("user_id");
+
+        const treatment = data.common_treatment_center;
+        const stringTreatment = treatment.map((i) => `${i}`).join('-');
+        const brand = data.brand;
+        const stringBrand = brand.map((i) => `${i}`).join('-');
+
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        }
+
+        const bodyParameters = {
+            key: "value",
+            title: 'کلینیک',
+            name: data.name_center,
+            type: data.type_center,
+            nature: data.name_center,
+            owner: data.name_founder,
+            medical_system_no: data.system_number,
+            license_no: data.operation_license,
+            unit_count: data.number_units,
+            activ_hource: data.date,
+            shift_count: data.active_shift,
+            expertise: data.expertise,
+            preparation: data.matrial,
+            purchase_conditions: data.buy,
+            cach_type: data.buy_detals,
+            mobile: data.mobile,
+            tell: data.phone,
+            age: data.office_worker,
+            common_treatment: stringTreatment,
+            brands: stringBrand,
+            description: data.details,
+            user_id:id
+
+        }
+
+        try {
+            const response = await axios.post('https://rasapol.reshe.ir/api/Create-present', bodyParameters, config);
+            // console.log(response);
+            if (response.data.status_code === 500) {
+                toast.error('خطای سرور لطفا دقایقی بعد تلاش کنید')
+            } else if (response.data.status_code === 422) {
+                toast.error(response.data.msg)
+            } else if (response.data.status_code === 200) {
+                reset();
+                setBrand([]);
+                setPersonName([]);
+                toast.success('ثبت کلینیک با موفقیت انجام شد')
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
     }
     // end function submit form
 
@@ -251,7 +305,7 @@ export default function Clinic() {
                                 <ArrowDropDownIcon className="svg-form" fontSize='small' />
                             </div>
                         </>
-                    : null}
+                        : null}
                     {watch("buy") === "شرایط" ?
                         <>
                             <span className="error">{errors.buy_detals?.message}</span>
@@ -260,7 +314,7 @@ export default function Clinic() {
                                 <CreateIcon className="svg-form" fontSize='small' />
                             </div>
                         </>
-                    : null}
+                        : null}
                     <span className="error">{errors.mobile?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="number" inputMode="numeric" placeholder="شماره همراه" {...register("mobile")} />

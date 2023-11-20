@@ -32,7 +32,8 @@ button,
   font-family: "font-primary" !important;
 }
 
-.font-light , li {
+.font-light,
+li {
   font-family: "font-light" !important;
 }
 
@@ -612,7 +613,7 @@ input[type=number] {
   margin-bottom: 1rem;
 }
 
-.img-center{
+.img-center {
   display: flex;
   justify-content: center;
 }
@@ -621,17 +622,18 @@ input[type=number] {
   text-align: center;
   display: block;
   width: 100%;
-  /* max-width: 250px; */
+  max-width: 250px;
   padding: 15px 24px 15px 24px;
   border-radius: 20px;
   gap: 10px;
   margin-right: auto;
   margin-left: auto;
   color: #ffffff;
+  background: #113D8D;
   /* background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%); */
-  background-image: linear-gradient(to top, #0c3483 0%, #a2b6df 100%, #6b8cce 100%, #a2b6df 100%);
+  /* background-image: linear-gradient(to top, #0c3483 0%, #a2b6df 100%, #6b8cce 100%, #a2b6df 100%); */
   cursor: pointer;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   text-decoration: none;
   box-sizing: border-box;
 }
@@ -643,11 +645,37 @@ input[type=number] {
   color: #FFFFFF;
 }
 
-.d-none{
+.btn-link-2 {
+  text-align: center;
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  padding: 15px 24px 15px 24px;
+  border-radius: 20px;
+  gap: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  color: #ffffff;
+  background: #fff;
+  border: 1px solid #113D8D;
+  cursor: pointer;
+  margin-top: 2rem;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.btn-span-link-2 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: #113D8D;
+}
+
+.d-none {
   display: none;
 }
 
-.card-melli{
+.card-melli {
   text-align: center;
   cursor: pointer;
   display: block;
@@ -657,7 +685,7 @@ input[type=number] {
   border-radius: 15px;
 }
 
-.span-card-melli{
+.span-card-melli {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -667,4 +695,45 @@ input[type=number] {
   line-height: 22px;
   color: #000;
   font-family: "font-light" !important;
+}
+
+.app-login {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.mt-app {
+  margin-top: 25.5rem;
+}
+
+
+.layouts-relative {
+  position: relative;
+}
+
+.img-absolute {
+  position: absolute;
+  z-index: 1000 !important;
+  top: 25%;
+  right: 35%;
+  left: 0;
+  bottom: 0px;
+}
+
+@media screen and (max-width: 320px),
+screen and (max-height: 568px) {
+  .mt-app {
+    margin-top: 19.5rem;
+  }
+
+  .img-absolute {
+    top: 25%;
+    right: 30%;
+  }
 }

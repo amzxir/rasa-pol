@@ -75,7 +75,9 @@ export default function AuthenticationCode(props) {
             } else if (response.data.token) {
                 setSpinner(false)
                 const getToken = response.data.token;
+                const getUserId = response.data.user_id
                 localStorage.setItem("token", getToken);
+                localStorage.setItem("user_id", getUserId);
                 toast.success("به پل خوش آمدید");
                 navigate("/");
 
