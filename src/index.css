@@ -130,7 +130,7 @@ body {
     top: 0;
     padding: 1rem 0rem;
     background-color: #f9f9f9;
-    z-index: 100000 !important;
+    z-index: 1000 !important;
   }
 }
 
@@ -311,6 +311,7 @@ body {
   appearance: none;
   border: 1px solid #eaeaea !important;
   background: #ffffff;
+  -webkit-text-fill-color:#212529; 
   width: 100%;
   box-sizing: border-box;
   height: 53px;
@@ -352,6 +353,7 @@ body {
 .select-form:focus {
   border: 1px solid #86b7fe !important;
   color: #212529;
+  -webkit-text-fill-color:#212529; 
   background: #fff !important;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);

@@ -44,7 +44,7 @@ export default function App() {
           position="top-right"
           rtl={true}
           theme="colored"
-          style={{ zIndex: '100000' }}
+          style={{ zIndex: '10000000 !important' }}
         />
       </Layouts>
     </Context.Provider>
