@@ -12,7 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Context from "../context/Context";
 import axios from 'axios';
-import { useEffect } from 'react';
+import BrandData from "../data/brands.json";
+
 
 // start data input select multip
 const ITEM_HEIGHT = 48;
@@ -303,13 +304,13 @@ export default function Office() {
                             <MenuItem dir='rtl' disabled value="">
                                 <em>برندها</em>
                             </MenuItem>
-                            {names.map((name) => (
+                            {BrandData.map((i , index) => (
                                 <MenuItem
                                     dir='rtl'
-                                    key={name}
-                                    value={name}
+                                    key={i.id}
+                                    value={i.name}
                                 >
-                                    {name}
+                                    {i.name}
                                 </MenuItem>
                             ))}
                         </Select>
