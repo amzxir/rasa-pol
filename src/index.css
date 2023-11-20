@@ -302,6 +302,7 @@ body {
   border-radius: 15px !important;
   gap: 9px;
   font-family: "font-light" !important;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .select-form {
@@ -337,10 +338,11 @@ body {
 }
 
 .textarea-form:focus {
-  border: 1px solid #eaeaea;
+  border: 1px solid #86b7fe !important;
   color: #212529;
-  background: #fff;
+  background: #fff !important;
   outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
 }
 
 .select-form::placeholder {
@@ -348,10 +350,11 @@ body {
 }
 
 .select-form:focus {
-  border: 1px solid #eaeaea;
+  border: 1px solid #86b7fe !important;
   color: #212529;
-  background: #fff;
+  background: #fff !important;
   outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
 }
 
 .select-font {
@@ -371,10 +374,11 @@ body {
 }
 
 .input-form:focus {
-  border: 1px solid #eaeaea !important;
+  border: 1px solid #86b7fe !important;
   color: #212529;
   background: #fff !important;
   outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
 }
 
 .svg-form {
@@ -736,4 +740,9 @@ screen and (max-height: 568px) {
     top: 25%;
     right: 30%;
   }
+}
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  font-size: 12px !important;
+  font-family: "font-light" !important;
 }
