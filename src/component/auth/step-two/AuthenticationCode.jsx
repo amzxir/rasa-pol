@@ -64,15 +64,20 @@ export default function AuthenticationCode(props) {
             mobile: props.data.mobile,
             code: verOtp,
         }
-        // console.log(verOtp)
         try {
             const response = await axios.post("https://rasapol.reshe.ir/api/VerifyOtp", verify);
             console.log(response);
 
-            if (response.data.msg === "data invalid") {
+            if (response.data.status_code === 500) {
                 setSpinner(false)
-                toast.success(response.data.msg)
-            } else if (response.data.token) {
+                toast.error("خطای سرور لطفا مجددا تلاش کنید");
+            } else if (response.data.status_code === 422) {
+                setSpinner(false)
+                toast.error(response.data.msg);
+            } else if (response.data.status_code === 403){
+                setSpinner(false)
+                toast.error("رمز اشتباه است")
+            } else if (response.data.status_code === 200){
                 setSpinner(false)
                 const getToken = response.data.token;
                 const getUserId = response.data.user_id
@@ -80,9 +85,7 @@ export default function AuthenticationCode(props) {
                 localStorage.setItem("user_id", getUserId);
                 toast.success("به پل خوش آمدید");
                 navigate("/");
-
             }
-            // console.log(response);
 
         } catch (error) {
             // console.error(error);
@@ -142,7 +145,7 @@ export default function AuthenticationCode(props) {
                             );
                         })}
                     </div>
-                    <button onClick={handelFinalSubmit} className="btn-code"><span className="btn-span-code">{fa["login"]}</span><ChevronLeftIcon className="btn-span-code" /></button>
+                    <button className="btn-code"><span className="btn-span-code">{fa["login"]}</span><ChevronLeftIcon className="btn-span-code" /></button>
                 </form>
 
                 <div className="re-send">

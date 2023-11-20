@@ -38,7 +38,7 @@ export default function Login(props) {
             if (response.data.status_code === 422) {
                 toast.error(response.data.msg)
             } else if (response.data.status_code === 200) {
-                toast.success(response.data.msg)
+                toast.success("کد با موفقیت ارسال شد")
             }
             setSpinner(false)
             localStorage.setItem("mobile", data.mobile);
@@ -72,7 +72,7 @@ export default function Login(props) {
                             </div>
                             <span className="error">{errors.mobile?.message}</span>
                         </div>
-                        <button className="btn-login" disabled={spinner}>{fa["Get code"]}{spinner ? <div class="lds-dual-ring"></div> : ''}</button>
+                        <button className="btn-login" disabled={spinner}>{fa["Get code"]}{spinner ? <div className="lds-dual-ring"></div> : ''}</button>
                     </form>
                 </div>
             </Box>
