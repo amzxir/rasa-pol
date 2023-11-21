@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext , useEffect } from 'react'
 import { Box } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create';
 import { useForm } from "react-hook-form";
@@ -80,6 +80,11 @@ const schema = yup.object().shape({
 
 
 export default function Clinic() {
+    // start title 
+    useEffect(() => {
+        window.document.title = "رساپل - ثبت کلینیک"
+    }, [])
+    // end title 
 
     // start use context
     const { token } = useContext(Context)
@@ -151,7 +156,7 @@ export default function Clinic() {
             common_treatment: stringTreatment,
             brands: stringBrand,
             description: data.details,
-            user_id:id
+            user_id: id
 
         }
 
@@ -388,7 +393,7 @@ export default function Clinic() {
                             <MenuItem dir='rtl' disabled value="">
                                 <em>برندها</em>
                             </MenuItem>
-                            {BrandData.map((i , index) => (
+                            {BrandData.map((i, index) => (
                                 <MenuItem
                                     dir='rtl'
                                     key={i.id}

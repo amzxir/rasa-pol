@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Grid } from '@mui/material'
 import { FadeTransform } from "react-animation-components";
 import { useForm } from "react-hook-form";
@@ -36,6 +36,12 @@ const schema = yup.object().shape({
 
 
 export default function Register() {
+
+    // start title 
+    useEffect(() => {
+        window.document.title = "رساپل - ثبت نام"
+    }, [])
+    // end title 
 
     // start react hook form
     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm({

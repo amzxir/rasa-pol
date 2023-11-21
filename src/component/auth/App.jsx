@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { FadeTransform } from "react-animation-components";
 
 
 export default function App() {
+
+    // start title 
+    useEffect(() => {
+        window.document.title = "رساپل"
+    }, [])
+    // end title 
+    
     return (
         // <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
         <Box>

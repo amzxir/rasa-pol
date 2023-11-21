@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create';
 import { useForm } from "react-hook-form";
@@ -26,6 +26,11 @@ import * as yup from "yup";
 
 
 export default function introduction() {
+    // start title 
+    useEffect(() => {
+        window.document.title = "رساپل - معرفی همکار"
+    }, [])
+    // end title 
 
     // // start react hook form
     // const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -47,7 +52,7 @@ export default function introduction() {
                 <div className='img-center'>
                     <QRCodeSVG className='img-fluid' value="https://rasapol.reshe.ir/" />
                 </div>
-                <p className='title-login-form' style={{ fontSize:'16px' }}>برای ثبت همکار لطفا بارکد را اسکن کنید</p>
+                <p className='title-login-form' style={{ fontSize: '16px' }}>برای ثبت همکار لطفا بارکد را اسکن کنید</p>
                 {/* <form onSubmit={handleSubmit(handleSubmits)}>
                     <span className="error">{errors.name?.message}</span>
                     <div className="form-groups">

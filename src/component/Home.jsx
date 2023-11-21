@@ -1,4 +1,4 @@
-import React, { useContext, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { Box, Grid, Avatar } from '@mui/material'
 import { FadeTransform } from "react-animation-components";
@@ -6,6 +6,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 
 export default function Home() {
+
+  // start title 
+  useEffect(() => {
+    window.document.title = "رساپل - خانه"
+  }, [])
+  // end title 
 
   // fetch data service
   const service = [
@@ -43,7 +49,7 @@ export default function Home() {
   return (
     <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
       <Box sx={{ mt: 5, mb: 5 }}>
-        <Grid sx={{ mb:2 }} container spacing={2}>
+        <Grid sx={{ mb: 2 }} container spacing={2}>
           {dataService.map((i, index) => {
             return (
               <Grid key={i.id} sx={{ pl: "10px !important", width: "100%" }} item xs={6}>

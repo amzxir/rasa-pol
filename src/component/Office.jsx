@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Box } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create';
 import { useForm } from "react-hook-form";
@@ -74,6 +74,12 @@ const schema = yup.object().shape({
 
 export default function Office() {
 
+    // start title 
+    useEffect(() => {
+        window.document.title = "رساپل - ثبت مطب"
+    }, [])
+    // end title 
+
     // start use context
     const { token } = useContext(Context)
     // end use context
@@ -97,7 +103,7 @@ export default function Office() {
         );
     };
     // end multip select  
-    
+
 
 
 
@@ -304,7 +310,7 @@ export default function Office() {
                             <MenuItem dir='rtl' disabled value="">
                                 <em>برندها</em>
                             </MenuItem>
-                            {BrandData.map((i , index) => (
+                            {BrandData.map((i, index) => (
                                 <MenuItem
                                     dir='rtl'
                                     key={i.id}
