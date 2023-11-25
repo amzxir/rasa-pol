@@ -38,6 +38,13 @@ const names = [
     'کودکان',
     'ایمپلنت',
 ];
+const materials = [
+    'سفارش اینترنتی از شرکت های وار کننده یا تولید کننده',
+    'سفارش اینترنتی از شرکت های توزیع کننده',
+    'سفارش از یک فروشنده',
+    'مراجعه حضوری به بازار',
+    'خرید از نمایشگاه',
+];
 // end data input select multip
 
 // regex error validation
@@ -51,7 +58,7 @@ const schema = yup.object().shape({
     system_number: yup.string().required('فیلد شماره نظام پزشکی اجباری است'),
     phone: yup.string().required('فیلد شماره ثابت اجباری است'),
     office_worker: yup.string().required('فیلد عمرفعال مطب اجباری است'),
-    common_treatment_center: yup.mixed().test("file", "فیلد درمان شایع مرکز اجباری است", (value) => {
+    common_treatment_center: yup.mixed().test("file", "فیلد درمان های شایع مرکز اجباری است", (value) => {
         if (value.length > 0) {
             return true;
         }
@@ -64,9 +71,14 @@ const schema = yup.object().shape({
         return false;
     }),
     details: yup.string().required('فیلد سوال اجباری است'),
-    matrial: yup.string().required('فیلد روش تهیه مواد مصرفی اجباری است'),
+    matrial: yup.mixed().test("file", "فیلد روش تهیه مواد مصرفی اجباری است", (value) => {
+        if (value.length > 0) {
+            return true;
+        }
+        return false;
+    }),
     buy: yup.string().required('فیلد شرایط خرید اجباری است'),
-    buy_detals: yup.string().required('فیلد جزیات خرید اجباری است'),
+    buy_detals: yup.string().required('فیلد جزئیات خرید اجباری است'),
 
 });
 
@@ -98,6 +110,16 @@ export default function Office() {
     const handleChangeBrand = (event) => {
         const { target: { value } } = event;
         setBrand(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
+    const [matrial, setMatrial] = React.useState([]);
+    const handleChangeMatrial = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setMatrial(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
@@ -164,6 +186,7 @@ export default function Office() {
                 reset();
                 setBrand([]);
                 setPersonName([]);
+                setExpertise([]);
                 toast.success('ثبت مطب با موفقیت انجام شد')
             }
         } catch (error) {
@@ -195,12 +218,12 @@ export default function Office() {
                     </div>
                     <span className="error">{errors.mobile?.message}</span>
                     <div className="form-groups">
-                        <input className="input-form" type="number" inputMode="numeric" placeholder="شماره همراه" {...register("mobile")} />
+                        <input className="input-form" type="number" inputMode="numeric" placeholder="شماره همراه مطب" {...register("mobile")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.phone?.message}</span>
                     <div className="form-groups">
-                        <input className="input-form" type="number" inputMode="numeric" placeholder="شماره ثابت" {...register("phone")} />
+                        <input className="input-form" type="number" inputMode="numeric" placeholder="شماره ثابت مطب" {...register("phone")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.office_worker?.message}</span>
@@ -210,15 +233,38 @@ export default function Office() {
                     </div>
                     <span className="error">{errors.matrial?.message}</span>
                     <div className="form-groups">
-                        <select className="select-form" {...register("matrial")}>
-                            <option value=''>روش تهیه مواد مصرفی را انتخاب کنید</option>
-                            <option value="سفارش اینترنتی از شرکت های وار کننده یا تولید کننده">سفارش اینترنتی از شرکت های وار کننده یا تولید کننده</option>
-                            <option value="سفارش اینترنتی از شرکت های توزیع کننده">سفارش اینترنتی از شرکت های توزیع کننده</option>
-                            <option value="شفارش از یک فروشنده">شفارش از یک فروشنده</option>
-                            <option value="مراجعه حصوری به بازار">مراجعه حصوری به بازار</option>
-                            <option value="خرید از نمایشگاه">خرید از نمایشگاه</option>
-                        </select>
-                        <ArrowDropDownIcon className="svg-form" fontSize='small' />
+                        <Select
+                            {...register("matrial")}
+                            sx={{ pr: 0 }}
+                            className="input-form"
+                            multiple
+                            displayEmpty
+                            value={matrial}
+                            onChange={handleChangeMatrial}
+                            input={<OutlinedInput />}
+                            MenuProps={MenuProps}
+                            renderValue={(selected) => {
+                                if (selected.length === 0) {
+                                    return <em className="select-font">روش تهیه مواد مصرفی را انتخاب کنید</em>;
+                                }
+
+                                return selected.join(', ');
+                            }}
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem dir='rtl' disabled value="">
+                                <em>روش تهیه مواد مصرفی را انتخاب کنید</em>
+                            </MenuItem>
+                            {materials.map((name) => (
+                                <MenuItem
+                                    dir='rtl'
+                                    key={name}
+                                    value={name}
+                                >
+                                    {name}
+                                </MenuItem>
+                            ))}
+                        </Select>
                     </div>
                     <span className="error">{errors.buy?.message}</span>
                     <div className="form-groups">
@@ -234,7 +280,7 @@ export default function Office() {
                             <span className="error">{errors.buy_detals?.message}</span>
                             <div className="form-groups">
                                 <select className="select-form" {...register("buy_detals")}>
-                                    <option value=''>جزیات خرید را انتخاب کنید</option>
+                                    <option value=''>جزئیات خرید را انتخاب کنید</option>
                                     <option value="پرداخت - ارسال">پرداخت - ارسال</option>
                                     <option value="ارسال - پرداخت">ارسال - پرداخت</option>
                                 </select>
@@ -265,7 +311,7 @@ export default function Office() {
                             MenuProps={MenuProps}
                             renderValue={(selected) => {
                                 if (selected.length === 0) {
-                                    return <em className="select-font">درمان شایع مرکز</em>;
+                                    return <em className="select-font">درمان های شایع مرکز</em>;
                                 }
 
                                 return selected.join(', ');
@@ -273,7 +319,7 @@ export default function Office() {
                             inputProps={{ 'aria-label': 'Without label' }}
                         >
                             <MenuItem dir='rtl' disabled value="">
-                                <em>درمان شایع مرکز</em>
+                                <em>درمان های شایع مرکز</em>
                             </MenuItem>
                             {names.map((name) => (
                                 <MenuItem
@@ -333,7 +379,7 @@ export default function Office() {
                     </div> */}
                     <span className="error">{errors.details?.message}</span>
                     <div className="form-groups">
-                        <textarea className="textarea-form" type="text" style={{ height: '200px' }} placeholder="مواد رو از چه کسی میگیری و چجوری تهیه میکنی ؟" {...register("details")}></textarea>
+                        <textarea className="textarea-form" type="text" style={{ height: '200px' }} placeholder="تامین کننده مواد مصرفی تون کیه ؟" {...register("details")}></textarea>
                     </div>
                     <div>
                         <button className="btn-form"><span className="btn-span-code">ثبت</span></button>
