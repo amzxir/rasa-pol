@@ -1,0 +1,35 @@
+
+{
+  "theme_color": "#22577a",
+  "background_color": "#22577a",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": ".",
+  "name": "Rasa Pol",
+  "short_name": "Rasa Pol",
+  "orientation": "any",
+  "related_applications": [],
+  "prefer_related_applications": true,
+  "description": "Demo PWA for Seller Rasadent feature",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ]
+}
+
+
