@@ -16,12 +16,12 @@ const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{11}$/;
 
 // validate form hook
 const schema = yup.object().shape({
-    card_melli: yup.mixed().test("file", "فیلد کارت ملی اجباری است", (value) => {
-        return value && value.length
-    }),
-    card_un: yup.mixed().test("file", "فیلد کارت دانشجویی اجباری است", (value) => {
-        return value && value.length
-    }),
+    // card_melli: yup.mixed().test("file", "فیلد کارت ملی اجباری است", (value) => {
+    //     return value && value.length
+    // }),
+    // card_un: yup.mixed().test("file", "فیلد کارت دانشجویی اجباری است", (value) => {
+    //     return value && value.length
+    // }),
     mobile: yup.string().required('فیلد شماره موبایل اجباری است').matches(phoneRegExp, 'شماره موبایل را به درستی وارد کنید'),
     name: yup.string().required('فیلد نام اجباری است'),
     // email: yup.string().required('فیلد ایمیل اجباری است'),
@@ -72,8 +72,8 @@ export default function Register() {
             description: data.details,
             name: data.name,
             year_income: data.date,
-            national_cart: data.card_melli[0],
-            student_cart: data.card_un[0],
+            // national_cart: data.card_melli[0],
+            // student_cart: data.card_un[0],
             porpose: data.target
         }
 
@@ -149,7 +149,7 @@ export default function Register() {
                         <input className="input-form" type="number" inputMode="numeric" placeholder="سال ورودی" {...register("date")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
-                    <Grid container spacing={2}>
+                    {/* <Grid container spacing={2}>
                         <Grid xs={6} item>
                             <span className="error">{errors.card_melli?.message}</span>
                             <div className="form-groups">
@@ -164,7 +164,7 @@ export default function Register() {
                                 <input className='d-none' type="file" id='card_un' {...register("card_un")} />
                             </div>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                     <span className="error">{errors.target?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="text" placeholder="هدف اصلی از طرح" {...register("target")} />
