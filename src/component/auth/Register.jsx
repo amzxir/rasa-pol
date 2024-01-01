@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Box, Grid } from '@mui/material'
 import { FadeTransform } from "react-animation-components";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import axios from 'axios';
 import CreateIcon from '@mui/icons-material/Create';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import * as yup from "yup";
+import Context from '../../context/context';
 
 
 // regex error validation
@@ -39,6 +40,11 @@ const schema = yup.object().shape({
 
 export default function Register() {
 
+    // start use context
+    const {spinner , setSpinner} = useContext(Context);
+    // end use context
+
+
     // start title 
     useEffect(() => {
         window.document.title = "رساپل - ثبت نام"
@@ -57,6 +63,7 @@ export default function Register() {
 
     // start function submit form
     const handleSubmits = async (data) => {
+        setSpinner(true)
 
         const config = {
             headers: {
@@ -84,18 +91,19 @@ export default function Register() {
             console.log(response);
             if (response.data.status_code === 500) {
                 toast.error('خطا در سرور مجدد تلاش کنید')
+                setSpinner(false)
             } else if (response.data.status_code === 422) {
                 toast.error(response.data.msg)
+                setSpinner(false)
             } else if (response.data.status_code === 200) {
-                // toast.success("تبریک با موفقیت ثبت نام شدید منتظر تایید حساب خود باشید");
-                toast.success("به رساپل خوش آمدید");
+                setSpinner(false)
+                toast.success("تبریک با موفقیت ثبت نام شدید منتظر تایید حساب خود باشید");
                 reset();
-                localStorage.setItem("mobile", data.mobile);
-                localStorage.setItem("token", 'asdasd378146ghsd!@3');
-                navigate("/")
+                navigate("/app")
             }
         } catch (error) {
             console.error(error);
+            setSpinner(false)
         }
 
     }
@@ -201,7 +209,7 @@ export default function Register() {
                         <textarea className="textarea-form" type="text" style={{ height: '200px' }} placeholder="در پایان طرح چه چیزی به دست بیارید راضی هستید ؟" {...register("details")}></textarea>
                     </div>
                     <div>
-                        <button className="btn-form"><span className="btn-span-code">ثبت</span></button>
+                        <button className="btn-form"><span className="btn-span-code">ثبت {spinner ? <div className="lds-dual-ring"></div> : ''}</span></button>
                     </div>
                 </form>
             </Box>
