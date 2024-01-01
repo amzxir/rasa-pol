@@ -50,7 +50,7 @@ export default function introduction() {
         <FadeTransform in transformProps={{ exitTransform: 'translateX(-100px)' }}>
             <Box sx={{ mt: 5, mb: 5 }}>
                 <div className='img-center'>
-                    <QRCodeSVG className='img-fluid' value="https://rasapol.reshe.ir/" />
+                    <QRCodeSVG className='img-fluid' value="https://rasa-dash-pol.reshe.ir/" />
                 </div>
                 <p className='title-login-form' style={{ fontSize: '16px' }}>برای ثبت همکار لطفا بارکد را اسکن کنید</p>
                 {/* <form onSubmit={handleSubmit(handleSubmits)}>

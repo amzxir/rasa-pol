@@ -80,7 +80,7 @@ export default function Register() {
         }
 
         try {
-            const response = await axios.post("https://rasapol.reshe.ir/api/Sign-up", bodyParameters, config);
+            const response = await axios.post("https://rasa-dash-pol.reshe.ir/api/Sign-up", bodyParameters, config);
             console.log(response);
             if (response.data.status_code === 500) {
                 toast.error('خطا در سرور مجدد تلاش کنید')
@@ -173,7 +173,7 @@ export default function Register() {
                             </div>
                         </Grid> */}
                         <Grid xs={6} item>
-                            {watch("card_un.length") == undefined ? 
+                            {watch("card_un") === undefined || watch("card_un.length") === 0 ? 
                             <>
                                 <span className="error">{errors.card_un?.message}</span>
                                 <div className="form-groups">

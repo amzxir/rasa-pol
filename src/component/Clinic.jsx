@@ -211,7 +211,7 @@ export default function Clinic() {
         }
 
         try {
-            const response = await axios.post('https://rasapol.reshe.ir/api/Create-present', bodyParameters, config);
+            const response = await axios.post('https://rasa-dash-pol.reshe.ir/api/Create-present', bodyParameters, config);
             // console.log(response);
             if (response.data.status_code === 500) {
                 toast.error('خطای سرور لطفا دقایقی بعد تلاش کنید')

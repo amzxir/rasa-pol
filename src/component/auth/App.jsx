@@ -23,11 +23,11 @@ export default function App() {
                     </div>
                 </div>
                 <div className='mt-app'>
-                    <NavLink to={"/login"} state={"ورود"} className="btn-link">
+                    {/* <NavLink to={"/login"} state={"ورود"} className="btn-link">
                         <span className="btn-span-link">ورود</span>
-                    </NavLink>
-                    <NavLink to={"/register"} state={"ثبت نام"} className="btn-link-2">
-                        <span className="btn-span-link-2">درخواست عضویت</span>
+                    </NavLink> */}
+                    <NavLink to={"/register"} state={"ثبت نام"} className="btn-link">
+                        <span className="btn-span-link">درخواست عضویت</span>
                     </NavLink>
                 </div>
             </div>

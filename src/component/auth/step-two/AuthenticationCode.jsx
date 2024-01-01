@@ -65,7 +65,7 @@ export default function AuthenticationCode(props) {
             code: verOtp,
         }
         try {
-            const response = await axios.post("https://rasapol.reshe.ir/api/VerifyOtp", verify);
+            const response = await axios.post("https://rasa-dash-pol.reshe.ir/api/VerifyOtp", verify);
             console.log(response);
 
             if (response.data.status_code === 500) {
