@@ -67,14 +67,14 @@ export default function Register() {
         const bodyParameters = {
             key: "value",
             mobile: data.mobile,
-            national_code: data.code_melli,
+            national_code: `${data.code_melli}-${data.code_un}`,
             univ_name: data.name_un,
             edu_city: data.study,
             location: data.city,
             description: data.details,
             name: data.name,
             year_income: data.date,
-            // national_cart: data.card_melli[0],
+            national_cart: data.card_un[0],
             student_cart: data.card_un[0],
             porpose: data.target
         }
@@ -87,9 +87,12 @@ export default function Register() {
             } else if (response.data.status_code === 422) {
                 toast.error(response.data.msg)
             } else if (response.data.status_code === 200) {
-                toast.success("تبریک با موفقیت ثبت نام شدید منتظر تایید حساب خود باشید");
+                // toast.success("تبریک با موفقیت ثبت نام شدید منتظر تایید حساب خود باشید");
+                toast.success("به رساپل خوش آمدید");
                 reset();
-                navigate("/app")
+                localStorage.setItem("mobile", data.mobile);
+                localStorage.setItem("token", 'asdasd378146ghsd!@3');
+                navigate("/")
             }
         } catch (error) {
             console.error(error);
