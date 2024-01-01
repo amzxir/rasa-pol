@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
+import city from "../../data/city.json";
 import axios from 'axios';
 import CreateIcon from '@mui/icons-material/Create';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -26,6 +27,7 @@ const schema = yup.object().shape({
     name: yup.string().required('فیلد نام اجباری است'),
     // email: yup.string().required('فیلد ایمیل اجباری است'),
     code_melli: yup.string().required('فیلد کدملی اجباری است'),
+    code_un: yup.string().required('فیلد کد دانشجویی اجباری است'),
     name_un: yup.string().required('فیلد نام دانشگاه اجباری است'),
     details: yup.string().required('فیلد سوال اجباری است'),
     study: yup.string().required('فیلد شهر محل تحصیل اجباری است'),
@@ -113,6 +115,11 @@ export default function Register() {
                         <input className="input-form" type="number" inputMode="numeric" placeholder="کدملی" {...register("code_melli")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
+                    <span className="error">{errors.code_un?.message}</span>
+                    <div className="form-groups">
+                        <input className="input-form" type="number" inputMode="numeric" placeholder="کد دانشجویی" {...register("code_un")} />
+                        <CreateIcon className="svg-form" fontSize='small' />
+                    </div>
                     <span className="error">{errors.mobile?.message}</span>
                     <div className="form-groups">
                         <input className="input-form" type="number" inputMode="numeric" placeholder="شماره همراه" {...register("mobile")} />
@@ -132,37 +139,11 @@ export default function Register() {
                     <div className="form-groups">
                         <select className="select-form" {...register("study")}>
                             <option value=''>شهر محل تحصیل را انتخاب کنید</option>
-                            <option value='تهران'>تهران</option>
-                            <option value='آذربایجان شرقی'>آذربایجان شرقی</option>
-                            <option value='آذربایجان غربی'>آذربایجان غربی</option>
-                            <option value='اردبیل'>اردبیل</option>
-                            <option value='اصفهان'>اصفهان</option>
-                            <option value='البرز'>البرز</option>
-                            <option value='ایلام'>ایلام</option>
-                            <option value='بوشهر'>بوشهر</option>
-                            <option value='چهارمحال و بختیاری'>چهارمحال و بختیاری</option>
-                            <option value='خراسان جنوبی'>خراسان جنوبی</option>
-                            <option value='خراسان رضوی'>خراسان رضوی</option>
-                            <option value='خراسان شمالی'>خراسان شمالی</option>
-                            <option value='خوزستان'>خوزستان</option>
-                            <option value='زنجان'>زنجان</option>
-                            <option value='سمنان'>سمنان</option>
-                            <option value='سیستان و بلوچستان'>سیستان و بلوچستان</option>
-                            <option value='فارس'>فارس</option>
-                            <option value='قزوین'>قزوین</option>
-                            <option value='قم'>قم</option>
-                            <option value='کردستان'>کردستان</option>
-                            <option value='کرمان'>کرمان</option>
-                            <option value='کرمانشاه'>کرمانشاه</option>
-                            <option value='کهگیلویه و بویراحمد'>کهگیلویه و بویراحمد</option>
-                            <option value='گلستان'>گلستان</option>
-                            <option value='گیلان'>گیلان</option>
-                            <option value='لرستان'>لرستان</option>
-                            <option value='مازندران'>مازندران</option>
-                            <option value='مرکزی'>مرکزی</option>
-                            <option value='هرمزگان'>هرمزگان</option>
-                            <option value='همدان'>همدان</option>
-                            <option value='یزد'>یزد</option>
+                            {city?.map((i,index) => {
+                                return(
+                                    <option key={i.id} value={i.name}>{i.name}</option>
+                                )
+                            })}
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -170,38 +151,11 @@ export default function Register() {
                     <div className="form-groups">
                         <select className="select-form" {...register("city")}>
                             <option value=''>شهر محل اقامت را انتخاب کنید</option>
-                            <option value='تهران'>تهران</option>
-                            <option value='تهران'>تهران</option>
-                            <option value='آذربایجان شرقی'>آذربایجان شرقی</option>
-                            <option value='آذربایجان غربی'>آذربایجان غربی</option>
-                            <option value='اردبیل'>اردبیل</option>
-                            <option value='اصفهان'>اصفهان</option>
-                            <option value='البرز'>البرز</option>
-                            <option value='ایلام'>ایلام</option>
-                            <option value='بوشهر'>بوشهر</option>
-                            <option value='چهارمحال و بختیاری'>چهارمحال و بختیاری</option>
-                            <option value='خراسان جنوبی'>خراسان جنوبی</option>
-                            <option value='خراسان رضوی'>خراسان رضوی</option>
-                            <option value='خراسان شمالی'>خراسان شمالی</option>
-                            <option value='خوزستان'>خوزستان</option>
-                            <option value='زنجان'>زنجان</option>
-                            <option value='سمنان'>سمنان</option>
-                            <option value='سیستان و بلوچستان'>سیستان و بلوچستان</option>
-                            <option value='فارس'>فارس</option>
-                            <option value='قزوین'>قزوین</option>
-                            <option value='قم'>قم</option>
-                            <option value='کردستان'>کردستان</option>
-                            <option value='کرمان'>کرمان</option>
-                            <option value='کرمانشاه'>کرمانشاه</option>
-                            <option value='کهگیلویه و بویراحمد'>کهگیلویه و بویراحمد</option>
-                            <option value='گلستان'>گلستان</option>
-                            <option value='گیلان'>گیلان</option>
-                            <option value='لرستان'>لرستان</option>
-                            <option value='مازندران'>مازندران</option>
-                            <option value='مرکزی'>مرکزی</option>
-                            <option value='هرمزگان'>هرمزگان</option>
-                            <option value='همدان'>همدان</option>
-                            <option value='یزد'>یزد</option>
+                            {city?.map((i,index) => {
+                                return(
+                                    <option key={i.id} value={i.name}>{i.name}</option>
+                                )
+                            })}
                         </select>
                         <ArrowDropDownIcon className="svg-form" fontSize='small' />
                     </div>
@@ -219,16 +173,24 @@ export default function Register() {
                             </div>
                         </Grid> */}
                         <Grid xs={6} item>
-                            <span className="error">{errors.card_un?.message}</span>
+                            {watch("card_un.length") == undefined ? 
+                            <>
+                                <span className="error">{errors.card_un?.message}</span>
+                                <div className="form-groups">
+                                    <label className='card-melli' htmlFor="card_un"><span className='span-card-melli'>{watch("card_un")?.length !== 0 ? 'بارگذاری کارت دانشجویی' : 'بارگذاری کارت دانشجویی'}</span></label>
+                                    <input className='d-none' type="file" id='card_un' {...register("card_un")} />
+                                </div>
+                            </>
+                            :
                             <div className="form-groups">
-                                <label className='card-melli' htmlFor="card_un"><span className='span-card-melli'>{watch("card_un")?.length !== 0 ? 'بارگذاری کارت دانشجویی' : 'بارگذاری کارت دانشجویی'}</span></label>
-                                <input className='d-none' type="file" id='card_un' {...register("card_un")} />
+                                <img width={150} height={150} src={URL?.createObjectURL(watch("card_un.[0]"))} alt="" />                            
                             </div>
+                        }
                         </Grid>
                     </Grid> 
                     <span className="error">{errors.target?.message}</span>
                     <div className="form-groups">
-                        <input className="input-form" type="text" placeholder="هدف اصلی از شرکتدر طرح" {...register("target")} />
+                        <input className="input-form" type="text" placeholder="هدف اصلی از شرکت در طرح" {...register("target")} />
                         <CreateIcon className="svg-form" fontSize='small' />
                     </div>
                     <span className="error">{errors.details?.message}</span>
